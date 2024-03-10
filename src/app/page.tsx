@@ -1,95 +1,89 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import React from 'react';
+import { Layout, Flex } from 'antd';
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+import ChatApp from '@/components/ChatApp/ChatApp'
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+const { Header, Footer, Sider, Content } = Layout;
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+const headerStyle: React.CSSProperties = {
+  textAlign: 'center',
+  color: '#fff',
+  height: 64,
+  paddingInline: 48,
+  lineHeight: '64px',
+  backgroundColor: '#4096ff',
+};
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+const contentStyle: React.CSSProperties = {
+  textAlign: 'center',
+  minHeight: 120,
+  lineHeight: '120px',
+  color: '#fff',
+  backgroundColor: '#0958d9',
+};
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
+const siderStyle: React.CSSProperties = {
+  textAlign: 'center',
+  lineHeight: '120px',
+  color: '#fff',
+  backgroundColor: '#1677ff',
+};
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
-}
+const footerStyle: React.CSSProperties = {
+  textAlign: 'center',
+  color: '#fff',
+  backgroundColor: '#4096ff',
+};
+
+const layoutStyle = {
+  borderRadius: 8,
+  overflow: 'hidden',
+  width: 'calc(50% - 8px)',
+  maxWidth: 'calc(50% - 8px)',
+};
+
+const App: React.FC = () => (
+  <ChatApp />
+  // <Flex gap="middle" wrap="wrap">
+  //   <Layout style={layoutStyle}>
+  //     <Header style={headerStyle}>Header</Header>
+  //     <Content style={contentStyle}>Content</Content>
+  //     <Footer style={footerStyle}>Footer</Footer>
+  //   </Layout>
+
+  //   <Layout style={layoutStyle}>
+  //     <Header style={headerStyle}>Header</Header>
+  //     <Layout>
+  //       <Sider width="25%" style={siderStyle}>
+  //         Sider
+  //       </Sider>
+  //       <Content style={contentStyle}>Content</Content>
+  //     </Layout>
+  //     <Footer style={footerStyle}>Footer</Footer>
+  //   </Layout>
+
+  //   <Layout style={layoutStyle}>
+  //     <Header style={headerStyle}>Header</Header>
+  //     <Layout>
+  //       <Content style={contentStyle}>Content</Content>
+  //       <Sider width="25%" style={siderStyle}>
+  //         Sider
+  //       </Sider>
+  //     </Layout>
+  //     <Footer style={footerStyle}>Footer</Footer>
+  //   </Layout>
+
+  //   <Layout style={layoutStyle}>
+  //     <Sider width="25%" style={siderStyle}>
+  //       Sider
+  //     </Sider>
+  //     <Layout>
+  //       <Header style={headerStyle}>Header</Header>
+  //       <Content style={contentStyle}>Content</Content>
+  //       <Footer style={footerStyle}>Footer</Footer>
+  //     </Layout>
+  //   </Layout>
+  // </Flex>
+);
+
+export default App;
