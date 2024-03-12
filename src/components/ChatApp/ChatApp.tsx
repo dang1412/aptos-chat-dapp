@@ -1,22 +1,28 @@
 'use client'
 
-import React from 'react';
-import { Layout, List, Input, Button, Avatar } from 'antd';
-import { MessageOutlined, SendOutlined } from '@ant-design/icons';
-import { useMessages } from '@/hooks';
+import React, { useCallback, useEffect, useState } from 'react'
+import { Layout, List, Input, Button, Avatar, Space, Divider  } from 'antd'
+import { MessageOutlined, SendOutlined } from '@ant-design/icons'
 
-const { Sider, Content } = Layout;
 
-// Sample messages
-// const messages = [
-//   { id: 1, author: "Friend", content: "Hey, how are you?", avatar: <Avatar style={{ backgroundColor: '#f56a00' }}>F</Avatar>, isSelf: false },
-//   { id: 2, author: "Self", content: "I'm good, thanks! And you?", avatar: <Avatar style={{ backgroundColor: '#87d068' }}>S</Avatar>, isSelf: true },
-//   { id: 3, author: "Friend", content: "Great to hear! I'm doing well, thanks for asking.", avatar: <Avatar style={{ backgroundColor: '#f56a00' }}>F</Avatar>, isSelf: false },
-// ];
+import { useMessages } from '@/hooks'
+import { ChatService, IPFSService } from '@/services'
+import { ManualOffer } from './ManualOffer'
+import { ManualAnswer } from './ManualAnswer'
+
+const { Sider, Content } = Layout
 
 const ChatApp = () => {
 
   const messages = useMessages(1)
+
+  const [msg, setMsg] = useState('')
+
+  const sendMsg = useCallback(() => {
+    const chatService = ChatService.getInstance()
+    chatService.sendMessage(msg)
+    setMsg('')
+  }, [msg])
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -33,6 +39,14 @@ const ChatApp = () => {
             </List.Item>
           )}
         />
+
+        <ManualOffer />
+
+        <ManualAnswer />
+        
+        {/* <hr style={{margin: '10px 0'}} /> */}
+
+        
       </Sider>
       <Layout>
         <Content style={{ padding: '20px' }}>
@@ -65,15 +79,17 @@ const ChatApp = () => {
           <div style={{ position: 'sticky', bottom: 0, backgroundColor: '#fff', padding: '10px' }}>
             <Input
               addonAfter={
-                <Button type="primary" icon={<SendOutlined />} />
+                <Button type="primary" onClick={sendMsg} icon={<SendOutlined />} />
               }
+              value={msg}
+              onChange={(e) => setMsg(e.target.value)}
               placeholder="Type your message here..."
             />
           </div>
         </Content>
       </Layout>
     </Layout>
-  );
-};
+  )
+}
 
-export default ChatApp;
+export default ChatApp

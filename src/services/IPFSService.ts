@@ -3,6 +3,15 @@ import { IPFSHTTPClient, create } from 'ipfs-http-client'
 export const IPFS_ADDR = 'https://api.millionpixelland.com'
 
 export class IPFSService {
+  static instance: IPFSService
+  static getInstance(): IPFSService {
+    if (!IPFSService.instance) {
+      IPFSService.instance = new IPFSService()
+    }
+
+    return IPFSService.instance
+  }
+
   private ipfs: IPFSHTTPClient
 
   constructor() {
@@ -15,7 +24,7 @@ export class IPFSService {
     return cid.toString()
   }
 
-  async fetch(cid: string) {
+  async fetch<T>(cid: string): Promise<T> {
     return fetch(`${IPFS_ADDR}/ipfs/${cid}`).then(res => res.json())
   }
 }
