@@ -1,4 +1,4 @@
-'use client'
+import { Message } from '@/types'
 
 export class ChatService {
   pc: RTCPeerConnection
@@ -52,19 +52,18 @@ export class ChatService {
     const stream = await navigator.mediaDevices.getUserMedia({audio: true})
     // Add the stream to the connection to use it in the offer
     stream.getTracks().forEach(track => this.pc.addTrack(track, stream))
-
-    // add tracks to the connection
-    // localStream.getTracks().forEach(track => {
-    //   peerConnection.addTrack(track, localStream);
-    // });
   }
 
+  // override
   // send the local SDP
   sendOfferOrAnswer(local: string) {
     // send offer to ipfs
     // request store onchain
     console.log('Updated local SDP', local)
   }
+
+  // override
+  onMessage(msg: Message) {}
 
   /**
    * This function is for receiving SDP offer or answer
@@ -100,8 +99,8 @@ export class ChatService {
     }
 
     channel.onmessage = (e) => {
-      const message = e.data
-      console.log('onmessage', message)
+      console.log('onmessage', e.data)
+      this.onMessage({ content: e.data, self: false })
     }
 
     channel.onerror = (e) => {
@@ -109,9 +108,10 @@ export class ChatService {
     }
   }
 
-  sendMessage(msg: string) {
+  sendMessage(content: string) {
     if (!this.channel) return
 
-    this.channel.send(msg)
+    this.channel.send(content)
+    this.onMessage({ content, self: true })
   }
 }

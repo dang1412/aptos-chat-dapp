@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
 
-interface Message {
-  content: string
-  isSelf: boolean
-}
+import { Message } from '@/types'
+import { ChatService } from '@/services'
 
 export function useMessages(friendId: number): Message[] {
   const [messages, setMessages] = useState<Message[]>([])
@@ -11,10 +9,15 @@ export function useMessages(friendId: number): Message[] {
   useEffect(() => {
     // init messages when first select to connect
     setMessages([
-      {content: 'Hello', isSelf: false},
-      {content: 'Hello 123', isSelf: true},
-      {content: 'Hello, how are you?', isSelf: false},
+      {content: 'Hello', self: false},
+      {content: 'Hello 123', self: true},
+      {content: 'Hello, how are you?', self: false},
     ])
+
+    const chatService = ChatService.getInstance()
+    chatService.onMessage = (msg) => {
+      setMessages(messages => [...messages, msg])
+    }
   }, [friendId])
 
   return messages

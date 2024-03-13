@@ -1,12 +1,11 @@
 'use client'
 
-import React, { useCallback, useEffect, useState } from 'react'
-import { Layout, List, Input, Button, Avatar, Space, Divider  } from 'antd'
+import React, { useCallback, useState } from 'react'
+import { Layout, List, Input, Button, Avatar } from 'antd'
 import { MessageOutlined, SendOutlined } from '@ant-design/icons'
 
-
 import { useMessages } from '@/hooks'
-import { ChatService, IPFSService } from '@/services'
+import { ChatService } from '@/services'
 import { ManualOffer } from './ManualOffer'
 import { ManualAnswer } from './ManualAnswer'
 
@@ -56,22 +55,22 @@ const ChatApp = () => {
             renderItem={message => (
               <div style={{
                 display: 'flex',
-                justifyContent: message.isSelf ? 'flex-end' : 'flex-start',
+                justifyContent: message.self ? 'flex-end' : 'flex-start',
                 marginBottom: 10,
               }}>
-                {!message.isSelf && <Avatar style={{ backgroundColor: '#f56a00' }}>F</Avatar>}
+                {!message.self && <Avatar style={{ backgroundColor: '#f56a00' }}>F</Avatar>}
                 <div style={{
                   maxWidth: '60%',
-                  background: message.isSelf ? '#e6f7ff' : '#f6ffed',
+                  background: message.self ? '#e6f7ff' : '#f6ffed',
                   padding: '8px 12px',
                   borderRadius: '10px',
-                  margin: message.isSelf ? '0 0 0 10px' : '0 10px 0 0',
+                  margin: message.self ? '0 0 0 10px' : '0 10px 0 0',
                   textAlign: 'left',
                   display: 'inline-block', // Ensure the bubble size fits the content
                 }}>
                   <p style={{ margin: 0 }}>{message.content}</p>
                 </div>
-                {message.isSelf && <Avatar style={{ backgroundColor: '#87d068' }}>S</Avatar>}
+                {message.self && <Avatar style={{ backgroundColor: '#87d068' }}>S</Avatar>}
               </div>
             )}
           />
